@@ -1,0 +1,28 @@
+{
+  "name": "GoodJob Notifier",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Coplaの自分宛GoodJobを通知｡",
+  "options_page": "options.html",
+  "web_accessible_resources": [
+    "img/goodjob.png",
+    "img/goodjob_black.png"
+  ],
+  "icons": {
+    "16": "img/goodjob.png",
+    "48": "img/goodjob.png",
+    "128": "img/goodjob.png"
+  },
+  "browser_action": {
+    "default_title": "GoodJob Notifier",
+    "default_icon": "img/goodjob.png"
+  },
+  "background" : {
+    "scripts": ["js/core.js", "js/jquery.js"]
+  },
+  "permissions": [
+    "tabs",
+    "notifications",
+    "https://*/*"
+  ]
+}
