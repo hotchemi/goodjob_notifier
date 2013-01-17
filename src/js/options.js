@@ -1,32 +1,34 @@
-
-// Saves options to localStorage.
 function save_options() {
-  var select = document.getElementById("color");
-  var color = select.children[select.selectedIndex].value;
-  localStorage["favorite_color"] = color;
+  var select = document.getElementById("interval"),
+  status = document.getElementById("status");
 
-  // Update status to let user know options were saved.
-  var status = document.getElementById("status");
+  localStorage["interval_minute"] = select.children[select.selectedIndex].value;
   status.innerHTML = "Options Saved.";
+
   setTimeout(function() {
     status.innerHTML = "";
-  }, 750);
+  }, 1000);
+  window.close();
 }
 
-// Restores select box state to saved value from localStorage.
 function restore_options() {
-  var favorite = localStorage["favorite_color"];
-  if (!favorite) {
+  var minute = localStorage["interval_minute"],
+    select = document.getElementById("interval"),
+    i,
+    max,
+    child;
+
+  if (!minute) {
     return;
   }
-  var select = document.getElementById("color");
-  for (var i = 0; i < select.children.length; i++) {
-    var child = select.children[i];
-    if (child.value == favorite) {
+  for (i = 0, max = select.children.length; i < max; i+=1) {
+    child = select.children[i];
+    if (child.value === minute) {
       child.selected = "true";
       break;
     }
   }
 }
+
 document.addEventListener('DOMContentLoaded', restore_options);
 document.querySelector('#save').addEventListener('click', save_options);
