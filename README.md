@@ -1,13 +1,14 @@
 # GoodJob Notifier
-自分宛のGoodJobを通知します｡
+自分宛のGoodJobを通知するChrome extension｡
 
 ##Install
-Download [GistCopy.crx](https://github.com/hotchemi/GistCopy/raw/master/pkg/GistCopy.crx) and Drag-and-Drop it to chrome extension page.
+Download [goodjob_notifier.crx](https://github.com/hotchemi/goodjob_notifier/raw/master/pkg/goodjob_notifier.crx) and Drag-and-Drop it to chrome extension page.
+
+## Require
+Google Chrome >= 22
 
 ##How to use
-- Gistにコードを上げておく
-- GistCopyをインストールして自分のユーザ名を入力
-- 使いたいGistをクリックするとはてな記法でコピー
-- Paste!
-
-## 詳細
+- 新着GoodJobがあるとデスクトップ通知とアイコンでお知らせ
+- デスクトップ通知とアイコンをクリックするとSNSへ
+- 更新間隔はオプションページで選択できる｡デフォルトは10分
+- ログアウト時はアイコンが灰色に
