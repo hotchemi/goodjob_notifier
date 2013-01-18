@@ -1,89 +1,89 @@
 (function() {
-    var URL = "https://www.skipaas.com/tenants/[tenant_id]/";
+  var URL = "https://www.skipaas.com/tenants/id/",
+    LOGIN_ICON = "img/gj.png",
+    LOGOUT_ICON = "img/gjm.png",
+    ALARM = "checkUpdate";
 
-    function checkUpdate() {
-        var jsonUrl = URL + "notifications.json",
-            length = 0,
-            req = new XMLHttpRequest();
+  function checkUpdate() {
+    var jsonUrl = URL + "notifications.json",
+      req = new XMLHttpRequest();
 
-        req.position = -1;
-        req.onprogress = function (e) {
-            req.position =  e.position;
-        };
+    req.position = -1;
+    req.onprogress = function (e) {
+      req.position =  e.position;
+    };
+    req.open("GET", jsonUrl, true);
+    req.onreadystatechange = function () {
+      var length;
 
-        req.open("GET", jsonUrl, true);
-        req.onreadystatechange = function () {
-            if (req.readyState === 4) {
-                try {
-                    length = parseInt(req.getResponseHeader("Content-Length"), 10);
-                } catch (e) {
-                    throw e;
-                }
-                if (length !== req.position) {
-                    chrome.browserAction.setIcon({"path": "img/gjm.png"});
-                    return;
-                }
-                process(req);
-            }
-        };
-        req.send();
-    }
-
-    function process(req) {
-        var newCount = JSON.parse(req.responseText).count,
-            preCount = localStorage["pre_count"] || 0,
-            increment = newCount - preCount;
-
-        chrome.browserAction.setIcon({"path": "img/gj.png"});
-
-        if (newCount && increment > 0) {
-            notify(increment);
-            chrome.browserAction.setBadgeText({text:String(increment)});
-        } else {
-            resetBadge();
+      if (req.readyState === 4) {
+        length = parseInt(req.getResponseHeader("Content-Length"), 10);
+        if (length !== req.position) {
+          chrome.browserAction.setIcon({"path": LOGOUT_ICON});
+          return;
         }
-        localStorage["pre_count"] = newCount;
+        chrome.browserAction.setIcon({"path": LOGIN_ICON});
+        process(req);
+      }
+    };
+
+    req.send();
+  }
+
+  function process(req) {
+    var newCount = JSON.parse(req.responseText).count,
+      preCount = localStorage.pre_count || 0,
+      increment = newCount - preCount;
+
+    if (newCount && increment > 0) {
+      chrome.browserAction.setBadgeText({text:String(increment)});
+      notify(increment);
+    } else {
+      resetBadge();
+      localStorage.pre_count = 0;
     }
+    localStorage.pre_count = newCount;
+  }
 
-    function notify(increment) {
-        var title = "GoodJob Notifier",
-            body = increment + "件の新着GoodJob",
-            icon = "img/gj.png",
-            dialog = webkitNotifications.createNotification(icon, title, body);
+  function notify(increment) {
+    var title = "GoodJob Notifier",
+      body = increment + "件の新着GoodJob",
+      dialog = webkitNotifications.createNotification(LOGIN_ICON, title, body);
 
-        dialog.addEventListener('click', function() {
-            dialog.cancel();
-            resetBadge();
-            window.open(URL);
-        });
+    dialog.addEventListener('click', function() {
+      window.open(URL);
+      dialog.cancel();
+      resetBadge();
+    });
+    dialog.show();
 
-        dialog.show();
-        setTimeout(function() {
-            dialog.cancel();
-        }, 3000);
+    setTimeout(function() {
+      dialog.cancel();
+    }, 3000);
+  }
+
+  function resetBadge() {
+    chrome.browserAction.setBadgeText({text:String("")});
+  }
+
+  chrome.browserAction.onClicked.addListener(function(tab) {
+    chrome.tabs.create({'url': URL}, function(tab) {});
+    resetBadge();
+  });
+
+  chrome.runtime.onInstalled.addListener(function() {
+    checkUpdate();
+    var minute = localStorage.interval_minute || 5;
+    if (typeof minute === "string") {
+      minute = parseInt(minute);
     }
+    chrome.alarms.create(ALARM, {periodInMinutes: minute});
+  });
 
-    function resetBadge() {
-        chrome.browserAction.setBadgeText({text:String("")});
-        localStorage["pre_count"] = 0;
+  chrome.alarms.onAlarm.addListener(function(alarm) {
+    if (alarm && alarm.name === ALARM) {
+      checkUpdate();
     }
-
-    chrome.browserAction.onClicked.addListener(function(tab) {
-        chrome.tabs.create({'url': URL}, function(tab) {
-            resetBadge();
-        });
-    });
-
-    chrome.runtime.onInstalled.addListener(function() {
-        checkUpdate();
-        var minute = localStorage["interval_minute"] || 10;
-        chrome.alarms.create('checkUpdate', {periodInMinutes: minute});
-    });
-
-    chrome.alarms.onAlarm.addListener(function(alarm) {
-        if (alarm && alarm.name === 'checkUpdate') {
-            checkUpdate();
-        }
-    });
+  });
 
 }());

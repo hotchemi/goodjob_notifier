@@ -1,8 +1,8 @@
 {
   "name": "GoodJob Notifier",
-  "version": "0.1",
+  "version": "0.1.1",
   "manifest_version": 2,
-  "description": "Coplaの新着GoodJobを通知｡",
+  "description": "SKIPの新着GoodJobを通知｡",
   "options_page": "options.html",
   "update_url": "https://github.com/hotchemi/goodjob_notifier/raw/master/pkg/goodjob_notifier.xml",
   "web_accessible_resources": [
