@@ -1,5 +1,4 @@
-*.pem
-
-*.DS_Store
 .idea/
 *.iml
+*.pem
+*.DS_Store

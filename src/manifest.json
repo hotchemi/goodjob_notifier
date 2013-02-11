@@ -1,8 +1,8 @@
 {
   "name": "GoodJob Notifier",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "manifest_version": 2,
-  "description": "SKIPの新着GoodJobを通知｡",
+  "description": "Notify SKIP new good job.",
   "options_page": "options.html",
   "update_url": "https://github.com/hotchemi/goodjob_notifier/raw/master/pkg/goodjob_notifier.xml",
   "web_accessible_resources": [
@@ -20,7 +20,7 @@
   },
   "background" : {
     "persistent": false,
-    "scripts": ["js/core.js", "js/jquery.js"]
+    "scripts": ["js/core.js"]
   },
   "permissions": [
     "tabs",

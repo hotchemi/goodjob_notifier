@@ -1,5 +1,5 @@
 # GoodJob Notifier
-SKIPの自分宛GoodJobを通知するChrome extension
+SKIPのGoodJobを通知するChrome extension
 
 ## Install
 Download [goodjob_notifier.crx](https://github.com/hotchemi/goodjob_notifier/raw/master/pkg/goodjob_notifier.crx) and Drag-and-Drop it to chrome extension page.
@@ -8,11 +8,14 @@ Download [goodjob_notifier.crx](https://github.com/hotchemi/goodjob_notifier/raw
 Google Chrome >= 22
 
 ## How to use
-- 新着GoodJobがあるとデスクトップ通知とアイコンでお知らせ
+- 新着GoodJobをデスクトップ通知とアイコンでお知らせ
 - デスクトップ通知とアイコンをクリックするとSKIPへ
-- 更新間隔はオプションページで選択できる｡デフォルトは5分
-- ログアウト時はモノクロアイコンに
+- 更新間隔はOption Pageで調整できる｡デフォルトは5分/1回
+- ログアウト時はモノクロアイコン
 
 ## ToDo
 - アイコン回転芸
-- Notificationの表示時間をOptionから設定できる様に
+
+## Release
+- ver 0.1.1 01/21
+- ver 0.1.2 02/11 Notifyの表示時間をoptionから更新できる様に｡
