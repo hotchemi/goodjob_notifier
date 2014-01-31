@@ -1,4 +1,4 @@
-var URL = "https://www.skipaas.com/tenants/39/",
+var URL = "https://www.skipaas.com/tenants/86/",
   LOGIN_ICON = "img/gj.png",
   LOGOUT_ICON = "img/gjm.png";
 
